@@ -1,0 +1,58 @@
+
+x-db-env: &db-env
+  DB_HOST: '${DB_HOST:-db-engine}'
+  DB_PORT: '${DB_PORT:-5432}'
+  DB_DATABASE: '${DB_DATABASE:-db_engine}'
+  DB_USERNAME: '${DB_USERNAME:-misesdev}'
+  DB_PASSWORD: '${DB_PASSWORD:-secret}'
+
+services:
+
+  db-money:
+    image: 'postgres:15'
+    ports:
+      - "${DB_PORT:-5432}:${DB_PORT:-5432}"
+    environment:
+      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_DB: '${DB_DATABASE:-db_engine}'
+      POSTGRES_USER: '${DB_USERNAME:-misesdev}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: ./app/
+    environment:
+      NODE_ENV: production
+      <<: *db-env
+    depends_on:
+      - db-money
+    ports:
+      - "${APP_PORT:-3000}:${APP_PORT:-3000}"
+    networks:
+      - app-network
+
+  indexer:
+    build:
+      context: ./indexer
+    environment:
+      <<: *db-env
+      working_dir: /app
+    depends_on:
+      - db-money
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
+
