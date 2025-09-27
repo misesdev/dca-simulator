@@ -14,9 +14,9 @@ class DBMoney
     public async list(offset: number, items: number): Promise<Price[]>
     {
         const query = `
-            SELECT pubkey 
-            FROM users 
-            ORDER BY pubkey 
+            SELECT * 
+            FROM prices 
+            ORDER BY timestamp DESC 
             LIMIT $1 OFFSET $2
         `
         const results = await this._db.query<Price>(query, [items, offset])
