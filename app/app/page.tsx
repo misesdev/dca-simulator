@@ -1,48 +1,12 @@
 'use client'
 
-import { useState } from 'react'
-import {
-    Box,
-    Button,
-    Flex,
-    Heading,
-    Input,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
-    FormControl,
-    FormLabel,
-    Text,
-    VStack,
-    HStack,
-    Icon,
-    Select,
-} from '@chakra-ui/react'
-import { FaBitcoin, FaCalendarAlt, FaMoneyBillWave } from 'react-icons/fa'
+import { Flex, Heading, Text, VStack } from '@chakra-ui/react'
+import SimulateForm, { SimulateParams } from '#components/SimulateForm'
 
 export default function Home() {
-    const [meses, setMeses] = useState(12)
-    const [valor, setValor] = useState('')
-    const [dia, setDia] = useState(1)
-    const [moeda, setMoeda] = useState('BRL')
 
-    const handleValorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const raw = e.target.value.replace(/\D/g, '')
-        const num = Number(raw) / 100
-        setValor(
-            num.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: moeda,
-            })
-        )
-    }
-
-    const handleSubmit = () => {
-        alert(
-            `Simulação:\nMeses: ${meses}\nValor: ${valor}\nDia: ${dia}\nMoeda: ${moeda}`
-        )
+    const handleSubmit = (params: SimulateParams) => {
+    
     }
 
     return (
@@ -54,8 +18,7 @@ export default function Home() {
             px={10}
             py={20}
         >
-            {/* Coluna Esquerda */}
-            <Flex flex="1" align="center" justify="center" p={10}>
+            <Flex flex="1" align="center" justify="center" py={10}>
                 <VStack align="flex-start" spacing={6}>
                     <Heading
                         size="2xl"
@@ -74,85 +37,8 @@ export default function Home() {
                 </VStack>
             </Flex>
 
-            {/* Coluna Direita - Painel */}
-            <Flex flex="1" align="center" justify="center">
-                <Box
-                    p={10}
-                    w="full"
-                    maxW="lg"
-                >
-                    <VStack spacing={6} align="stretch">
-                        {/* Moeda */}
-                        <FormControl>
-                            <FormLabel>Fiat Currency</FormLabel>
-                            <Select
-                                value={moeda}
-                                onChange={(e) => setMoeda(e.target.value)}
-                                bg="whiteAlpha.200"
-                                border="none"
-                                rounded="md"
-                                fontWeight="medium"
-                                sx={{
-                                    option: {
-                                        background: '#1a1a1a',
-                                        color: 'white',
-                                    },
-                                }}
-                            >
-                                <option value="USD">🇺🇸 Dólar (USD)</option>
-                                <option value="BRL">🇧🇷 Real (BRL)</option>
-                            </Select>
-                        </FormControl>
-
-                        {/* Meses */}
-                        <FormControl>
-                            <FormLabel>
-                                <HStack spacing={2}>
-                                    <Icon as={FaCalendarAlt} />
-                                    <Text>Number of Months</Text>
-                                </HStack>
-                            </FormLabel>
-                            <NumberInput
-                                value={meses}
-                                onChange={(_, v) => setMeses(v)}
-                                min={1}
-                                max={120}
-                            >
-                                <NumberInputField />
-                                <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                </NumberInputStepper>
-                            </NumberInput>
-                        </FormControl>
-
-                        {/* Valor */}
-                        <FormControl>
-                            <FormLabel>
-                                <HStack spacing={2}>
-                                    <Icon as={FaMoneyBillWave} />
-                                    <Text>Monthly Value</Text>
-                                </HStack>
-                            </FormLabel>
-                            <Input
-                                value={valor}
-                                onChange={handleValorChange}
-                                placeholder={`0,00 ${moeda}`}
-                            />
-                        </FormControl>
-
-                        {/* Botão */}
-                        <Button
-                            w="full"
-                            size="lg"
-                            color="white"
-                            onClick={handleSubmit}
-                            transition="all 0.2s"
-                        >
-                            Simulate
-                        </Button>
-                    </VStack>
-                </Box>
+            <Flex flex="1" align="center" justify="center" py={10}>
+                <SimulateForm handleSubmit={handleSubmit} />
             </Flex>
         </Flex>
     )
