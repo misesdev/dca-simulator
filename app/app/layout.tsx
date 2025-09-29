@@ -22,6 +22,7 @@ export default function Layout(props: { children: React.ReactNode }) {
                     href="/static/favicons/favicon-16x16.png"
                 />
                 <link rel="manifest" href="/static/favicons/manifest.json" />
+                <title>DCA Simulator - Simulate and Repend</title>
             </head>
             <body className="chakra-ui-dark" >
                 <Provider>{props.children}</Provider>

@@ -14,7 +14,7 @@ services:
       - "${DB_PORT:-5432}:${DB_PORT:-5432}"
     environment:
       PGPASSWORD: '${DB_PASSWORD:-secret}'
-      POSTGRES_DB: '${DB_DATABASE:-db_engine}'
+      POSTGRES_DB: '${DB_DATABASE:-db_money}'
       POSTGRES_USER: '${DB_USERNAME:-misesdev}'
       POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     volumes:

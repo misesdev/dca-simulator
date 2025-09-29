@@ -1,4 +1,5 @@
 import { configDotenv } from "dotenv";
+import MoneyService from "./src/service/MoneyService";
 
 configDotenv()
 
@@ -29,8 +30,9 @@ process.on("SIGINT", gracefulShutdown);
 const runIndexer = async () => {
     try 
     {
-        console.log("Running indexer...");
-        // indexer 
+        console.log("Running...");
+        var service = new MoneyService()
+        await service.loadPrices()
     } 
     catch (err) {
         console.error("Indexer error:", err);

@@ -23,6 +23,7 @@ export type SimulateParams = {
     currency: string;
     months: number;
     value: string;
+    day: number;
 }
 
 interface SimulateFormProps {
@@ -31,6 +32,7 @@ interface SimulateFormProps {
 
 const SimulateForm = ({ handleSubmit }: SimulateFormProps) => {
 
+    const [day, setDay] = useState(1)
     const [months, setMonths] = useState(12)
     const [value, setValue] = useState('')
     const [currency, setCurrency] = useState('BRL')
@@ -103,6 +105,37 @@ const SimulateForm = ({ handleSubmit }: SimulateFormProps) => {
                 </NumberInput>
             </FormControl>
 
+            <FormControl>
+                <FormLabel>
+                    <HStack spacing={2}>
+                        <Icon as={FaCalendarAlt} />
+                        <Text>Day of Month</Text>
+                    </HStack>
+                </FormLabel>
+                <NumberInput
+                    value={day}
+                    onChange={(_, v) => setDay(!!v ? v : 1)}
+                    bg="whiteAlpha.200"
+                    border="none"
+                    rounded="md"
+                    fontWeight="medium"
+                    sx={{
+                        option: {
+                            background: '#1a1a1a',
+                            color: 'white',
+                        },
+                    }}
+                    min={1}
+                    max={28}
+                >
+                    <NumberInputField border="hidden" />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+
             {/* Valor */}
             <FormControl>
                 <FormLabel>
@@ -133,7 +166,7 @@ const SimulateForm = ({ handleSubmit }: SimulateFormProps) => {
                 w="full"
                 size="lg"
                 color="white"
-                onClick={() => handleSubmit({ months, value, currency })}
+                onClick={() => handleSubmit({ months, value, day, currency })}
                 bgGradient="linear(to-r, teal.700, green.600)"
                 _hover={""}
                 transition="all 0.2s"

@@ -2,11 +2,15 @@
 
 import { Flex, Heading, Text, VStack } from '@chakra-ui/react'
 import SimulateForm, { SimulateParams } from '#components/SimulateForm'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
 
+    const router = useRouter()
+
     const handleSubmit = (params: SimulateParams) => {
-    
+        const { currency, months, value, day } = params
+        router.push(`/simulate?currency=${currency}&months=${months}&day=${day}&value=${value}`)
     }
 
     return (

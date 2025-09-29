@@ -32,44 +32,51 @@ class DBMoney
         }
     }
 
-    private async upsertBetch(users: Price[]): Promise<void>
+    private async upsertBetch(prices: Price[]): Promise<void>
     {
-        if(!users.length) return;
+        if(!prices.length) return;
 
         const columns = [
-            "pubkey", "name", "display_name", "picture", "about", "banner", "website", 
-            "nip05", "lud06", "lud16", "zap_service", "created_at", "available"
+            "code", "codein", "high", "low", "timestamp", "day", "month", "year"
         ];
         const values: any[] = [];
         const placeholders: string[] = [];
-        users.forEach((user, i) => {
+        prices.forEach((price, i) => {
             const baseIndex = i * columns.length;
             placeholders.push(
                 `(${columns.map((_, j) => `$${baseIndex + j + 1}`).join(", ")})`
             );
             values.push(
-                true 
+                price.code,
+                price.codein,
+                price.high,
+                price.low,
+                price.timestamp,
+                price.day,
+                price.month,
+                price.year
             )
         })
         const query = `
-            INSERT INTO users (${columns.join(", ")})
+            INSERT INTO prices (${columns.join(", ")})
             VALUES ${placeholders.join(", ")}
-            ON CONFLICT (pubkey)
+            ON CONFLICT (year, month, day)
             DO UPDATE SET
-                name = EXCLUDED.name,
-                display_name = EXCLUDED.display_name,
-                picture = EXCLUDED.picture,
-                about = EXCLUDED.about,
-                banner = EXCLUDED.banner,
-                website = EXCLUDED.website,
-                nip05 = EXCLUDED.nip05,
-                lud06 = EXCLUDED.lud06,
-                lud16 = EXCLUDED.lud16,
-                zap_service = EXCLUDED.zap_service,
-                updated_at = NOW(),
-                available = true
+                code = EXCLUDED.code,
+                codein = EXCLUDED.codein,
+                high = EXCLUDED.high,
+                low = EXCLUDED.low,
+                timestamp = EXCLUDED.timestamp;
         `;
         await this._db.exec(query, values);
+    }
+
+    public async clear(): Promise<void>
+    {
+        const query = `
+            DELETE FROM prices;
+        `;
+        await this._db.exec(query, null);
     }
 
 }
