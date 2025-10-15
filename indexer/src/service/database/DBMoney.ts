@@ -60,25 +60,14 @@ class DBMoney
         const query = `
             INSERT INTO prices (${columns.join(", ")})
             VALUES ${placeholders.join(", ")}
-            ON CONFLICT (year, month, day)
+            ON CONFLICT (year, month, day, codein)
             DO UPDATE SET
-                code = EXCLUDED.code,
-                codein = EXCLUDED.codein,
                 high = EXCLUDED.high,
                 low = EXCLUDED.low,
                 timestamp = EXCLUDED.timestamp;
         `;
         await this._db.exec(query, values);
     }
-
-    public async clear(): Promise<void>
-    {
-        const query = `
-            DELETE FROM prices;
-        `;
-        await this._db.exec(query, null);
-    }
-
 }
 
 export default DBMoney

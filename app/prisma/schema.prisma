@@ -23,7 +23,7 @@ model prices {
     day Int
     month Int
     year Int
-    @@unique([day, month, year])
+    @@unique([day, month, year, codein])
     @@index([year])
     @@index([month])
     @@index([day])

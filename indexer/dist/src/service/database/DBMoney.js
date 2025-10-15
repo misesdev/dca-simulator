@@ -55,23 +55,13 @@ class DBMoney {
             const query = `
             INSERT INTO prices (${columns.join(", ")})
             VALUES ${placeholders.join(", ")}
-            ON CONFLICT (year, month, day)
+            ON CONFLICT (year, month, day, codein)
             DO UPDATE SET
-                code = EXCLUDED.code,
-                codein = EXCLUDED.codein,
                 high = EXCLUDED.high,
                 low = EXCLUDED.low,
                 timestamp = EXCLUDED.timestamp;
         `;
             yield this._db.exec(query, values);
-        });
-    }
-    clear() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const query = `
-            DELETE FROM prices;
-        `;
-            yield this._db.exec(query, null);
         });
     }
 }
