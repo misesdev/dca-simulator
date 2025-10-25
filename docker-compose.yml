@@ -1,7 +1,7 @@
 
 x-db-env: &db-env
   DB_HOST: '${DB_HOST:-db-engine}'
-  DB_PORT: '${DB_PORT:-5432}'
+  DB_PORT: '5432'
   DB_DATABASE: '${DB_DATABASE:-db_engine}'
   DB_USERNAME: '${DB_USERNAME:-misesdev}'
   DB_PASSWORD: '${DB_PASSWORD:-secret}'
@@ -11,7 +11,7 @@ services:
   db-money:
     image: 'postgres:15'
     ports:
-      - "${DB_PORT:-5432}:${DB_PORT:-5432}"
+      - "${DB_PORT:-5432}:5432"
     environment:
       PGPASSWORD: '${DB_PASSWORD:-secret}'
       POSTGRES_DB: '${DB_DATABASE:-db_money}'
@@ -32,7 +32,7 @@ services:
     depends_on:
       - db-money
     ports:
-      - "${APP_PORT:-3000}:${APP_PORT:-3000}"
+      - "${APP_PORT:-3800}:${APP_PORT:-3000}"
     networks:
       - app-network
 
@@ -41,7 +41,7 @@ services:
       context: ./indexer
     environment:
       <<: *db-env
-      working_dir: /app
+      TZ: America/Sao_Paulo
     depends_on:
       - db-money
     restart: unless-stopped

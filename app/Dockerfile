@@ -2,9 +2,9 @@ FROM node:20
 
 WORKDIR /usr/src/app
 
-# COPY . .
+COPY . . 
 
-# RUN npm install
+RUN npm install
 
 RUN npm run build
 

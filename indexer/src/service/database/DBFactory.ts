@@ -6,7 +6,7 @@ class DBFactory
     constructor() 
     {
         this._db = new Pool({
-            host: process.env.DB_HOST || "db-engine",    
+            host: process.env.DB_HOST || "db-money",    
             port: parseInt(process.env.DB_PORT??"5432"),          
             user: process.env.DB_USERNAME,  
             password: process.env.DB_PASSWORD,
