@@ -1,10 +1,10 @@
 
 x-db-env: &db-env
-  DB_HOST: '${DB_HOST:-db-engine}'
+  DB_HOST: '${DB_HOST:-db-money}'
   DB_PORT: '5432'
-  DB_DATABASE: '${DB_DATABASE:-db_engine}'
+  DB_DATABASE: '${DB_DATABASE:-db_money}'
   DB_USERNAME: '${DB_USERNAME:-misesdev}'
-  DB_PASSWORD: '${DB_PASSWORD:-secret}'
+  DB_PASSWORD: '${DB_PASSWORD:-misesdev}'
 
 services:
 
@@ -13,10 +13,10 @@ services:
     ports:
       - "${DB_PORT:-5432}:5432"
     environment:
-      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      PGPASSWORD: '${DB_PASSWORD:-misesdev}'
       POSTGRES_DB: '${DB_DATABASE:-db_money}'
       POSTGRES_USER: '${DB_USERNAME:-misesdev}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-misesdev}'
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
