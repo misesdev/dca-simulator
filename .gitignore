@@ -21,6 +21,4 @@ yarn-error.log
 /pgsql
 pgsql
 
-.env
-*/.env
 */**/settings.local.json
