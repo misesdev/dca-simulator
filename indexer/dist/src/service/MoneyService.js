@@ -21,9 +21,9 @@ class MoneyService {
     }
     loadPrices() {
         return __awaiter(this, void 0, void 0, function* () {
-            // const prices = await this._dbMoney.list(0, 10);
-            // if(prices.length)
-            //     return await this.loadTodayPrice()
+            const prices = yield this._dbMoney.list(0, 10);
+            if (prices.length)
+                return yield this.loadTodayPrice();
             yield this.loadInitialPrices();
         });
     }

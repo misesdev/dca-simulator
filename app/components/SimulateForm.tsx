@@ -68,8 +68,9 @@ const SimulateForm = ({ handleSubmit }: SimulateFormProps) => {
                         },
                     }}
                 >
-                    <option value="USD">🇺🇸 Dólar (USD)</option>
-                    <option value="BRL">🇧🇷 Real (BRL)</option>
+                    <option value="BRL">🇧🇷Real (BRL)</option>
+                    <option value="USD">🇺🇸Dólar (USD)</option>
+                    <option value="EUR">🇪🇺Euro (USD)</option>
                 </Select>
             </FormControl>
 

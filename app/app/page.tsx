@@ -10,7 +10,9 @@ export default function Home() {
 
     const handleSubmit = (params: SimulateParams) => {
         const { currency, months, value, day } = params
-        router.push(`/simulate?currency=${currency}&months=${months}&day=${day}&value=${value}`)
+        if(currency && months && value && day) {
+            router.push(`/simulate?currency=${currency}&months=${months}&day=${day}&value=${value.replace(/\D/g, '')}`)
+        }
     }
 
     return (
